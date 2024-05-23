@@ -1,4 +1,4 @@
-import { Injectable, Logger } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable, Logger } from '@nestjs/common';
 import { Readable } from 'stream';
 import * as readline from 'readline';
 
@@ -37,26 +37,21 @@ export class LogisticsMapService {
   }
   async getLogisticsMap(file: Express.Multer.File) {
     const userMap = new Map<string, ILogisticsMapResponse>();
+    const fileStream = new Readable();
+    fileStream.push(file.buffer);
+    fileStream.push(null);
 
-    try {
-      const fileStream = new Readable();
-      fileStream.push(file.buffer);
-      fileStream.push(null);
+    const rl = readline.createInterface({
+      input: fileStream,
+      crlfDelay: Infinity,
+    });
 
-      const rl = readline.createInterface({
-        input: fileStream,
-        crlfDelay: Infinity,
-      });
-
-      for await (const line of rl) {
-        const logisticsMap = this.processLine(line);
-        this.updateUserMap(userMap, logisticsMap);
-      }
-
-      return Array.from(userMap.values());
-    } catch (error) {
-      this.logger.error(error.message);
+    for await (const line of rl) {
+      const logisticsMap = this.processLine(line);
+      this.updateUserMap(userMap, logisticsMap);
     }
+
+    return Array.from(userMap.values());
   }
 
   // Processador da linha do arquivo, transforma em um Json simples
@@ -72,12 +67,17 @@ export class LogisticsMapService {
     const productId = rest.slice(0, 10).trim();
     const value = parseFloat(rest.slice(10).trim());
 
+    if (isNaN(Number(userId))) {
+      this.logger.error(`Invalid line`);
+      throw new HttpException('Invalid line', HttpStatus.BAD_REQUEST);
+    }
+
     return {
       user_id: userId,
       name: userName,
       order_id: orderId,
-      product_id: productId,
       date,
+      product_id: productId,
       value,
     };
   }
@@ -100,6 +100,7 @@ export class LogisticsMapService {
     let order = user.orders.find(
       (order) => order.order_id === Number(entry.order_id),
     );
+
     if (!order) {
       order = {
         order_id: Number(entry.order_id),

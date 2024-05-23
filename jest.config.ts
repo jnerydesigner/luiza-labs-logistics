@@ -13,4 +13,16 @@ module.exports = {
     '^@presenters/(.*)$': '<rootDir>/src/presenters/$1',
   },
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node'],
+  collectCoverage: true,
+  collectCoverageFrom: [
+    'src/**/*.{ts,tsx}',
+    '!src/**/*.d.ts',
+    '!src/**/index.ts',
+  ],
+  coverageDirectory: 'coverage',
+  coverageReporters: ['text', 'lcov'],
+  coveragePathIgnorePatterns: [
+    '<rootDir>/src/main\\.ts$',
+    '<rootDir>/src/infra/modules/',
+  ],
 };
