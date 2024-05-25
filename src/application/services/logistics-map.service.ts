@@ -1,3 +1,4 @@
+import { ILogisticsMap } from './../../../dist/src/application/services/logistics-map.service.d';
 import { HttpException, HttpStatus, Injectable, Logger } from '@nestjs/common';
 import { Readable } from 'stream';
 import * as readline from 'readline';
@@ -33,6 +34,11 @@ export interface ILogisticsMap {
   value: number;
 }
 
+// export interface ILogisticsMapError {
+//   line: number;
+//   message: string;
+// }
+
 @Injectable()
 export class LogisticsMapService {
   private logger: Logger;
@@ -51,16 +57,22 @@ export class LogisticsMapService {
     });
 
     let linesCount = 0;
+    const linesErrors = [];
 
     for await (const line of rl) {
       linesCount++;
+
       const logisticsMap = this.processLine(line);
 
-      console.log(logisticsMap);
-      this.updateUserMap(userMap, logisticsMap);
+      if (logisticsMap.user_id === 0) {
+        linesErrors.push(linesCount);
+      } else {
+        this.updateUserMap(userMap, logisticsMap);
+      }
     }
 
     console.log(linesCount);
+    console.log(linesErrors);
 
     const response = Array.from(userMap.values());
 
@@ -82,10 +94,10 @@ export class LogisticsMapService {
     const productId = rest.slice(0, 10).trim();
     const value = parseFloat(rest.slice(10).trim());
 
-    if (isNaN(Number(userId))) {
-      this.logger.error(`Invalid line`);
-      throw new HttpException('Invalid line', HttpStatus.BAD_REQUEST);
-    }
+    // if (isNaN(Number(userId))) {
+    //   this.logger.error(`Invalid line`);
+    //   throw new HttpException('Invalid line', HttpStatus.BAD_REQUEST);
+    // }
 
     return {
       user_id: Number(userId),
