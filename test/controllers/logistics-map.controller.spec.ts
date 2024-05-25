@@ -8,7 +8,7 @@ import { LogisticsMapController } from '@presenters/controllers/logistics-map.co
 
 function MockFile(): Express.Multer.File {
   const buffer = Buffer.from(
-    '0000000001                             John Doe00000000010000000001     100.0020240524\n',
+    '0000000002                             John Doe00000000010000000001     100.0020240524\n',
   );
 
   return {
@@ -47,6 +47,10 @@ describe('LogisticsMapController', () => {
     return blob;
   };
 
+  afterEach(() => {
+    jest.resetAllMocks();
+  });
+
   beforeEach(async () => {
     const app: TestingModule = await Test.createTestingModule({
       controllers: [LogisticsMapController],
@@ -72,11 +76,9 @@ describe('LogisticsMapController', () => {
     it('should return a list of logistics map', async () => {
       const mockFile = MockFile();
 
-      const result = await logisticsMapController.uploadFile(mockFile);
-
-      const expected = [
+      const expectedResponse = [
         {
-          user_id: 1,
+          user_id: 2,
           name: 'John Doe',
           orders: [
             {
@@ -89,7 +91,9 @@ describe('LogisticsMapController', () => {
         },
       ];
 
-      expect(result).toEqual(expected);
+      const result = await logisticsMapController.uploadFile(mockFile);
+
+      expect(result).toEqual(expectedResponse);
 
       jest.resetAllMocks();
     });
@@ -112,7 +116,12 @@ describe('LogisticsMapController', () => {
         throw new HttpException('Invalid line', HttpStatus.BAD_REQUEST);
       });
 
-      expect(logisticsMapService.getLogisticsMap(mockFile)).rejects.toThrow(
+      const uuid = 'b520a8d3-c13e-4870-9452-67aea10ec678';
+      const nameFileExport = `logistics-map-${uuid}.json`;
+
+      expect(
+        logisticsMapService.getLogisticsMap(mockFile, nameFileExport),
+      ).rejects.toThrow(
         new HttpException('Invalid line', HttpStatus.BAD_REQUEST),
       );
 
@@ -157,15 +166,15 @@ describe('LogisticsMapController', () => {
     };
 
     const entry = {
-      user_id: '1',
+      user_id: 1,
       name: 'Test User',
-      order_id: '1',
+      order_id: 1,
       date: '2021-01-01',
-      product_id: '1',
+      product_id: 1,
       value: 50,
     };
 
-    const userMap = new Map<string, ILogisticsMapResponse>();
+    const userMap = new Map<number, ILogisticsMapResponse>();
     userMap.set(entry.user_id, user);
 
     logisticsMapService.updateUserMap(userMap, entry);

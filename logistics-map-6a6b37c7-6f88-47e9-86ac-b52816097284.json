@@ -1,0 +1,19 @@
+[
+  {
+    "user_id": 88,
+    "name": "Terra Daniel DDS",
+    "orders": [
+      {
+        "order_id": 836,
+        "total": 1899.02,
+        "date": "2021-09-09",
+        "products": [
+          {
+            "product_id": 3,
+            "value": 1899.02
+          }
+        ]
+      }
+    ]
+  }
+]

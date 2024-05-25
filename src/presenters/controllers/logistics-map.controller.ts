@@ -14,6 +14,11 @@ export class LogisticsMapController {
   @Post('upload')
   @UseInterceptors(FileInterceptor('file'))
   uploadFile(@UploadedFile() file: Express.Multer.File) {
-    return this.logisticsMapService.getLogisticsMap(file);
+    const uuid = '6a6b37c7-6f88-47e9-86ac-b52816097284';
+    const nameFileExport = `logistics-map-${uuid}.json`;
+
+    console.log(nameFileExport);
+
+    return this.logisticsMapService.getLogisticsMap(file, nameFileExport);
   }
 }
