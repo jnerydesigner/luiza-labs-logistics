@@ -1,5 +1,4 @@
-import { ILogisticsMap } from './../../../dist/src/application/services/logistics-map.service.d';
-import { HttpException, HttpStatus, Injectable, Logger } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { Readable } from 'stream';
 import * as readline from 'readline';
 import * as fs from 'fs';
@@ -34,10 +33,14 @@ export interface ILogisticsMap {
   value: number;
 }
 
-// export interface ILogisticsMapError {
-//   line: number;
-//   message: string;
-// }
+export interface ILogisticsMapError {
+  line: number;
+  message: string;
+}
+
+export interface ILogisticsError {
+  errors: ILogisticsMapError[];
+}
 
 @Injectable()
 export class LogisticsMapService {
@@ -58,21 +61,29 @@ export class LogisticsMapService {
 
     let linesCount = 0;
     const linesErrors = [];
+    const logisticsErrors: ILogisticsError = { errors: [] };
 
     for await (const line of rl) {
       linesCount++;
 
       const logisticsMap = this.processLine(line);
 
-      if (logisticsMap.user_id === 0) {
+      if (isNaN(logisticsMap.value) || logisticsMap.user_id === 0) {
         linesErrors.push(linesCount);
+
+        logisticsErrors.errors.push({
+          line: linesCount,
+          message: `Error in line ${linesCount}.`,
+        });
       } else {
         this.updateUserMap(userMap, logisticsMap);
       }
     }
 
-    console.log(linesCount);
-    console.log(linesErrors);
+    if (linesErrors.length > 0) {
+      this.logger.error(`Errors in lines: ${linesErrors.join(', ')}`);
+      await this.saveJsonToFile('errors.json', logisticsErrors);
+    }
 
     const response = Array.from(userMap.values());
 
@@ -93,11 +104,6 @@ export class LogisticsMapService {
     rest = rest.slice(orderId.length).trim();
     const productId = rest.slice(0, 10).trim();
     const value = parseFloat(rest.slice(10).trim());
-
-    // if (isNaN(Number(userId))) {
-    //   this.logger.error(`Invalid line`);
-    //   throw new HttpException('Invalid line', HttpStatus.BAD_REQUEST);
-    // }
 
     return {
       user_id: Number(userId),
@@ -161,7 +167,7 @@ export class LogisticsMapService {
     const jsonString = JSON.stringify(data, null, 2);
     const buffer = Buffer.from(jsonString, 'utf8');
 
-    console.log(`Arquivo ${filename} salvo com sucesso.`);
+    this.logger.log(`Arquivo ${filename} salvo com sucesso.`);
     await writeFileAsync(`${filename}`, buffer.toString('utf8'), 'utf8');
   }
 }

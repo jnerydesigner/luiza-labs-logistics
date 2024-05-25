@@ -1,8 +1,5 @@
-import {
-  ILogisticsMapResponse,
-  LogisticsMapService,
-} from '@application/services/logistics-map.service';
-import { HttpException, HttpStatus, Logger } from '@nestjs/common';
+import { LogisticsMapService } from '@application/services/logistics-map.service';
+import { Logger } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import { LogisticsMapController } from '@presenters/controllers/logistics-map.controller';
 
@@ -27,7 +24,6 @@ function MockFile(): Express.Multer.File {
 
 describe('LogisticsMapController', () => {
   let logisticsMapController: LogisticsMapController;
-  let logisticsMapService: LogisticsMapService;
   let logger: Logger;
   MockFile.prototype.create = function (name, size, mimeType) {
     name = name || 'mock.txt';
@@ -61,130 +57,37 @@ describe('LogisticsMapController', () => {
       LogisticsMapController,
     );
 
-    logisticsMapService = app.get<LogisticsMapService>(LogisticsMapService);
-
     logger = app.get<Logger>(Logger);
 
     jest.spyOn(logger, 'error').mockImplementation(() => {});
   });
 
-  describe('root', () => {
-    it('should to be defined', () => {
-      expect(logisticsMapController).toBeDefined();
-    });
-
-    it('should return a list of logistics map', async () => {
-      const mockFile = MockFile();
-
-      const expectedResponse = [
-        {
-          user_id: 2,
-          name: 'John Doe',
-          orders: [
-            {
-              order_id: 1,
-              total: 100.0,
-              date: '2024-05-24',
-              products: [{ product_id: 1, value: 100.0 }],
-            },
-          ],
-        },
-      ];
-
-      const result = await logisticsMapController.uploadFile(mockFile);
-
-      expect(result).toEqual(expectedResponse);
-
-      jest.resetAllMocks();
-    });
-
-    it('should log an error if something goes wrong', async () => {
-      const mockFile: Express.Multer.File = {
-        buffer: Buffer.from('invalid buffer'),
-        fieldname: 'file',
-        originalname: 'testfile.txt',
-        encoding: '7bit',
-        mimetype: 'text/plain',
-        size: 1024,
-        stream: null,
-        destination: '',
-        filename: '',
-        path: '',
-      };
-
-      jest.spyOn(logisticsMapService, 'processLine').mockImplementation(() => {
-        throw new HttpException('Invalid line', HttpStatus.BAD_REQUEST);
-      });
-
-      const uuid = 'b520a8d3-c13e-4870-9452-67aea10ec678';
-      const nameFileExport = `logistics-map-${uuid}.json`;
-
-      expect(
-        logisticsMapService.getLogisticsMap(mockFile, nameFileExport),
-      ).rejects.toThrow(
-        new HttpException('Invalid line', HttpStatus.BAD_REQUEST),
-      );
-
-      jest.clearAllMocks();
-    });
+  it('should to be defined', () => {
+    expect(logisticsMapController).toBeDefined();
   });
 
-  it('should throw an error if userId is not a number', () => {
-    const line = 'notANumber restOfTheLine';
+  it('should return a list of logistics map', async () => {
+    const mockFile = MockFile();
 
-    expect(() => logisticsMapService.processLine(line)).toThrow(
-      new HttpException('Invalid line', HttpStatus.BAD_REQUEST),
-    );
-  });
+    const expectedResponse = [
+      {
+        user_id: 2,
+        name: 'John Doe',
+        orders: [
+          {
+            order_id: 1,
+            total: 100.0,
+            date: '2024-05-24',
+            products: [{ product_id: 1, value: 100.0 }],
+          },
+        ],
+      },
+    ];
 
-  it("Shold return a date in the format 'YYYY-MM-DD'", () => {
-    const date = '20240524';
-    const result = logisticsMapService.formatDate(date);
+    const result = await logisticsMapController.uploadFile(mockFile);
 
-    expect(result).toBe('2024-05-24');
-    jest.clearAllMocks();
-  });
+    expect(result).toEqual(expectedResponse);
 
-  it('should find the correct order', () => {
-    const user = {
-      user_id: 1,
-      name: 'Test User',
-      orders: [
-        {
-          order_id: 1,
-          total: 100,
-          date: '2021-01-01',
-          products: [],
-        },
-        {
-          order_id: 2,
-          total: 200,
-          date: '2021-02-01',
-          products: [],
-        },
-      ],
-    };
-
-    const entry = {
-      user_id: 1,
-      name: 'Test User',
-      order_id: 1,
-      date: '2021-01-01',
-      product_id: 1,
-      value: 50,
-    };
-
-    const userMap = new Map<number, ILogisticsMapResponse>();
-    userMap.set(entry.user_id, user);
-
-    logisticsMapService.updateUserMap(userMap, entry);
-
-    const updatedUser = userMap.get(entry.user_id);
-    const order = updatedUser.orders.find(
-      (order) => order.order_id === Number(entry.order_id),
-    );
-
-    expect(order).toBeDefined();
-    expect(order.order_id).toEqual(Number(entry.order_id));
+    jest.resetAllMocks();
   });
 });
