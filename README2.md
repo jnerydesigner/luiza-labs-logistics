@@ -1,12 +1,12 @@
 # Desafio Luiza Labs
 
 <p align="center">
-  <img src="https://github.com/jnerydesigner/luzia-labs-logistics/blob/main/assets/luizalabs.png" width="200" alt="Luiza Labs Logo" />
+  <img src="https://github.com/jnerydesigner/luzia-labs-logistics/blob/main/assets/luizalabs.png" width="700" alt="Luiza Labs Logo" />
 </p>
 
-# Desafio Luiza labs
 
----
+
+
 
 ## Ferramentas:
 
@@ -159,5 +159,5 @@ Pontos a serem abordados após a primeira implementação:
 Os teste conseguiram cobrir 100%, conforme imagem abaixo e arquivo coverage do projeto:
 
 <p align="center">
-  <img src="https://github.com/jnerydesigner/luiza-labs-logistics/blob/main/assets/test.png" width="200" alt="Relatório de Testes" />
+  <img src="https://github.com/jnerydesigner/luiza-labs-logistics/blob/main/assets/test.png" width="700" alt="Relatório de Testes" />
 </p>
