@@ -105,6 +105,8 @@ A escolha do NodeJS com o NestJS, se deu por ele ter uma implementação mais ra
 	]
 }
 
+```
+
 2 - Parte da Solução é capturar as linhas onde ocorrem os erros, claro que não peguei todos os erros.
 
 ```json
@@ -124,8 +126,6 @@ A escolha do NodeJS com o NestJS, se deu por ele ter uma implementação mais ra
     }
   ]
 }
-
-```
 
 ```
 
