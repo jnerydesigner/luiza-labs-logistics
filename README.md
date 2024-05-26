@@ -225,6 +225,40 @@ Os teste conseguiram cobrir 100%, conforme imagem abaixo e arquivo coverage do p
   <img src="https://github.com/jnerydesigner/luiza-labs-logistics/blob/main/assets/coluna_de_resposta_da_requisicao.png" width="700" alt="Tela de Resposta da Requisição" />
 </p>
 
+## Arquitetura da Aplicação
+
+### Diagrama de Sequência
+
+<p align="center">
+  <img src="https://github.com/jnerydesigner/luiza-labs-logistics/blob/main/out/01_controller/Diagrama%20de%20Sequ%C3%AAncia.png" width="700" alt="Diagrama de Sequencia" />
+</p>
+
+### Diagrama de Classe
+
+<p align="center">
+  <img src="https://github.com/jnerydesigner/luiza-labs-logistics/blob/main/out/02_arquetetura-service/Arquiterura%20de%20Classes.png" width="700" alt="Diagrama de Classe" />
+</p>
+
+
+### Diagrama de Json da Resposta
+
+<p align="center">
+  <img src="https://github.com/jnerydesigner/luiza-labs-logistics/blob/main/out/03_response_json/Resposta%20em%20Json.png" width="700" alt="Diagrama de Json da Resposta" />
+</p>
+
+### Diagrama de Json do Erro
+
+<p align="center">
+  <img src="https://github.com/jnerydesigner/luiza-labs-logistics/blob/main/out/04_error_json/Resposta%20em%20Json.png" width="700" alt="Diagrama de Json do Erro" />
+</p>
+
+### Diagrama de Sequência
+
+<p align="center">
+  <img src="https://github.com/jnerydesigner/luiza-labs-logistics/blob/main/out/01_controller/Diagrama%20de%20Sequ%C3%AAncia.png" width="700" alt="Diagrama de Sequencia" />
+</p>
+
+
 
 
 ## Developer
