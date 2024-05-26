@@ -85,26 +85,26 @@ A escolha do NodeJS com o NestJS, se deu por ele ter uma implementação mais ra
 
 1 - Primeira parte da solução é o envio do arquivo, pois o cliente necessita que o arquivo no formato acima, seja transformado em um json dessa forma:
 
-```javascript
-[
-	{
-		"user_id": 1,
-		"name": "John Doe",
-		"orders": [
-			{
-				"order_id": 1,
-				"total": 100,
-				"date": "2024-05-27",
-				"products": [
-					{
-						"product_id": 1,
-						"value": 100
-					}
-				]
-			}
-		]
-	}
-]
+```yaml
+
+{
+	"user_id": 1,
+	"name": "John Doe",
+	"orders": [
+		{
+			"order_id": 1,
+			"total": 100,
+			"date": "2024-05-27",
+			"products": [
+				{
+					"product_id": 1,
+					"value": 100
+				}
+			]
+		}
+	]
+}
+
 ```
 
 | ID USUÁRIO | NOME | ID PEDIDO | ID PRODUTO | VALOR DO PRODUTO | DATA DA COMPRA |
