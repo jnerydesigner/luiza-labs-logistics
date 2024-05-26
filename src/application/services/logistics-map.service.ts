@@ -3,6 +3,7 @@ import { Readable } from 'stream';
 import * as readline from 'readline';
 import * as fs from 'fs';
 import * as path from 'path';
+
 export interface ILogisticsMapResponse {
   user_id: number;
   name: string;
@@ -11,14 +12,14 @@ export interface ILogisticsMapResponse {
 
 export interface IOrder {
   order_id: number;
-  total: number;
+  total: string; // Alterado para string
   date: string;
   products: IProduct[];
 }
 
 export interface IProduct {
   product_id: number;
-  value: number;
+  value: string; // Alterado para string
 }
 
 export interface ILogisticsMap {
@@ -27,7 +28,7 @@ export interface ILogisticsMap {
   order_id: number;
   date: string;
   product_id: number;
-  value: number;
+  value: string; // Alterado para string
 }
 
 export interface ILogisticsMapError {
@@ -65,7 +66,7 @@ export class LogisticsMapService {
 
       const logisticsMap = this.processLine(line);
 
-      if (isNaN(logisticsMap.value) || logisticsMap.user_id === 0) {
+      if (isNaN(parseFloat(logisticsMap.value)) || logisticsMap.user_id === 0) {
         linesErrors.push(linesCount);
 
         logisticsErrors.errors.push({
@@ -100,7 +101,7 @@ export class LogisticsMapService {
     const orderId = rest.slice(0, 10).trim();
     rest = rest.slice(orderId.length).trim();
     const productId = rest.slice(0, 10).trim();
-    const value = parseFloat(rest.slice(10).trim());
+    const value = rest.slice(10).trim(); // Alterado para string
 
     return {
       user_id: Number(userId),
@@ -134,7 +135,7 @@ export class LogisticsMapService {
     if (!order) {
       order = {
         order_id: entry.order_id,
-        total: Number(Number('0').toFixed(2)),
+        total: '0', // Alterado para string
         date: this.formatDate(entry.date),
         products: [],
       };
@@ -146,7 +147,7 @@ export class LogisticsMapService {
       value: entry.value,
     });
 
-    order.total = Number((order.total + entry.value).toFixed(2));
+    order.total = String(Number(order.total) + Number(entry.value)); // Alterado para string
   }
 
   extractUntilFirstZero(str: string) {

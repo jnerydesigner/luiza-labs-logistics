@@ -1,7 +1,10 @@
-import { LogisticsMapService } from '@application/services/logistics-map.service';
+import { LogisticsMapController } from '@presenters/controllers/logistics-map.controller';
 import { Logger } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
-import { LogisticsMapController } from '@presenters/controllers/logistics-map.controller';
+import {
+  ILogisticsMapResponse,
+  LogisticsMapService,
+} from '@application/services/logistics-map.service';
 
 function MockFile(): Express.Multer.File {
   const buffer = Buffer.from(
@@ -26,23 +29,6 @@ describe('LogisticsMapController', () => {
   let logisticsMapController: LogisticsMapController;
   let logger: Logger;
   let logisticsMapService: LogisticsMapService;
-  MockFile.prototype.create = function (name, size, mimeType) {
-    name = name || 'mock.txt';
-    size = size || 1024;
-    mimeType = mimeType || 'plain/txt';
-
-    function range(count) {
-      let output = '';
-      for (let i = 0; i < count; i++) {
-        output += 'a';
-      }
-      return output;
-    }
-
-    const blob = new Blob([range(size)], { type: mimeType });
-
-    return blob;
-  };
 
   afterEach(() => {
     jest.resetAllMocks();
@@ -57,9 +43,7 @@ describe('LogisticsMapController', () => {
     logisticsMapController = app.get<LogisticsMapController>(
       LogisticsMapController,
     );
-
     logger = app.get<Logger>(Logger);
-
     logisticsMapService = app.get<LogisticsMapService>(LogisticsMapService);
 
     jest.spyOn(logger, 'error').mockImplementation(() => {});
@@ -72,16 +56,16 @@ describe('LogisticsMapController', () => {
   it('should return a list of logistics map', async () => {
     const mockFile = MockFile();
 
-    const expectedResponse = [
+    const expectedResponse: ILogisticsMapResponse[] = [
       {
         user_id: 2,
         name: 'John Doe',
         orders: [
           {
             order_id: 1,
-            total: 100.0,
+            total: '100.0',
             date: '2024-05-24',
-            products: [{ product_id: 1, value: 100.0 }],
+            products: [{ product_id: 1, value: '100.0' }],
           },
         ],
       },

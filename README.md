@@ -93,17 +93,39 @@ A escolha do NodeJS com o NestJS, se deu por ele ter uma implementação mais ra
 	"orders": [
 		{
 			"order_id": 1,
-			"total": 100,
+			"total": "100",
 			"date": "2024-05-27",
 			"products": [
 				{
 					"product_id": 1,
-					"value": 100
+					"value": "100"
 				}
 			]
 		}
 	]
 }
+
+2 - Parte da Solução é capturar as linhas onde ocorrem os erros, claro que não peguei todos os erros.
+
+```json
+{
+  "errors": [
+    {
+      "line": 2,
+      "message": "Error in line 2."
+    },
+    {
+      "line": 20,
+      "message": "Error in line 20."
+    },
+    {
+      "line": 54,
+      "message": "Error in line 54."
+    }
+  ]
+}
+
+```
 
 ```
 

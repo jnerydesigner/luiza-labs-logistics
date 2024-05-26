@@ -17,10 +17,6 @@ export class LogisticsMapController {
     const uuid = '6a6b37c7-6f88-47e9-86ac-b52816097284';
     const nameFileExport = `logistics-map-${uuid}.json`;
 
-    await this.logisticsMapService.getLogisticsMap(file, nameFileExport);
-
-    return {
-      message: `File ${nameFileExport} uploaded successfully`,
-    };
+    return this.logisticsMapService.getLogisticsMap(file, nameFileExport);
   }
 }

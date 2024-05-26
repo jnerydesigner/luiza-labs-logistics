@@ -29,24 +29,6 @@ function MockFile(): Express.Multer.File {
 describe('LogisticsMapService', () => {
   let logisticsMapService: LogisticsMapService;
 
-  MockFile.prototype.create = function (name, size, mimeType) {
-    name = name || 'mock.txt';
-    size = size || 1024;
-    mimeType = mimeType || 'plain/txt';
-
-    function range(count) {
-      let output = '';
-      for (let i = 0; i < count; i++) {
-        output += 'a';
-      }
-      return output;
-    }
-
-    const blob = new Blob([range(size)], { type: mimeType });
-
-    return blob;
-  };
-
   beforeEach(async () => {
     const app: TestingModule = await Test.createTestingModule({
       providers: [
@@ -149,24 +131,6 @@ describe('LogisticsMapService', () => {
       };
     }
 
-    MockFile.prototype.create = function (name, size, mimeType) {
-      name = name || 'mock.txt';
-      size = size || 1024;
-      mimeType = mimeType || 'plain/txt';
-
-      function range(count) {
-        let output = '';
-        for (let i = 0; i < count; i++) {
-          output += 'a';
-        }
-        return output;
-      }
-
-      const blob = new Blob([range(size)], { type: mimeType });
-
-      return blob;
-    };
-
     const logisticsMap = await logisticsMapService.getLogisticsMap(
       MockFile(),
       'logistics-map-6a6b37c7-6f88-47e9-86ac-b52816097284.json',
@@ -192,14 +156,14 @@ describe('LogisticsMapService', () => {
     );
 
     expect(result).toBeUndefined();
-  }),
-    it("Shold return a date in the format 'YYYY-MM-DD'", async () => {
-      const date = '20240524';
-      const result = logisticsMapService.formatDate(date);
+  });
 
-      expect(result).toBe('2024-05-24');
-      jest.clearAllMocks();
-    });
+  it("Should return a date in the format 'YYYY-MM-DD'", async () => {
+    const date = '20240524';
+    const result = logisticsMapService.formatDate(date);
+
+    expect(result).toBe('2024-05-24');
+  });
 
   it('should find the correct order', () => {
     const user = {
@@ -208,13 +172,13 @@ describe('LogisticsMapService', () => {
       orders: [
         {
           order_id: 1,
-          total: 100,
+          total: '100',
           date: '2021-01-01',
           products: [],
         },
         {
           order_id: 2,
-          total: 200,
+          total: '200',
           date: '2021-02-01',
           products: [],
         },
@@ -227,7 +191,7 @@ describe('LogisticsMapService', () => {
       order_id: 1,
       date: '2021-01-01',
       product_id: 1,
-      value: 50,
+      value: '50',
     };
 
     const userMap = new Map<number, ILogisticsMapResponse>();
@@ -253,7 +217,7 @@ describe('LogisticsMapService', () => {
       order_id: 1,
       date: '2021-01-01',
       product_id: 1,
-      value: 50,
+      value: '50',
     };
 
     logisticsMapService.updateUserMap(userMap, entry);

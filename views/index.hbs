@@ -41,8 +41,7 @@
 
         if (response.ok) {
           const responseData = await response.json()
-          console.log(responseData.message)
-          document.getElementById('response').innerHTML = `<p>${responseData.message}</p>`;
+          document.getElementById('response').innerHTML = `<p>Arquivo enviado com sucesso</p>`;
         } else {
           document.getElementById('response').innerHTML = `<p>Ocorreu um erro ao enviar o arquivo.</p>`;
           console.error('Erro:', response.statusText);
