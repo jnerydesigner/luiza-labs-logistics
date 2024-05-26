@@ -207,9 +207,9 @@ Os teste conseguiram cobrir 100%, conforme imagem abaixo e arquivo coverage do p
 
 ## Developer
 
-- Author - <a href="https://jandernery.seligadev.com.br/portfolio" target="_blank">Jander Nery</a>
-- Linkedin - <a href="https://www.linkedin.com/in/jander-nery" target="_blank">Linkedin de Jander Nery</a>
-- Youtube - <a href="https://www.youtube.com/channel/UCr5fGhSnZV7eqfDYcV09XOQ" target="_blank">Youtube de Jander Nery</a>
+- Author - <a href="https://jandernery.seligadev.com.br/portfolio" target="blank">Jander Nery</a>
+- Linkedin - <a href="https://www.linkedin.com/in/jander-nery" target="blank">Linkedin de Jander Nery</a>
+- Youtube - <a href="https://www.youtube.com/channel/UCr5fGhSnZV7eqfDYcV09XOQ" target="blank">Youtube de Jander Nery</a>
 
 
 ## Stay in touch
