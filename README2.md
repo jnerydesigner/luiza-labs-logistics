@@ -170,18 +170,18 @@ Os teste conseguiram cobrir 100%, conforme imagem abaixo e arquivo coverage do p
 <a href="https://insomnia.rest/download" target="_blank" style="font-size:2rem">Insomnia</a>
 
 <p align="center">
-  <img src="https://github.com/jnerydesigner/luiza-labs-logistics/blob/main/assets/test.png" width="700" alt="Relatório de Testes" />
+  <img src="https://github.com/jnerydesigner/luiza-labs-logistics/blob/main/assets/tela-insomnia.png" width="700" alt="Tela Principal Insomnia" />
 </p>
 
 <p align="center">
-  <img src="https://github.com/jnerydesigner/luiza-labs-logistics/blob/main/assets/test.png" width="700" alt="Relatório de Testes" />
+  <img src="https://github.com/jnerydesigner/luiza-labs-logistics/blob/main/assets/coluna_de_recursos.png" width="700" alt="Tela de Request" />
 </p>
 
 <p align="center">
-  <img src="https://github.com/jnerydesigner/luiza-labs-logistics/blob/main/assets/test.png" width="700" alt="Relatório de Testes" />
+  <img src="https://github.com/jnerydesigner/luiza-labs-logistics/blob/main/assets/coluna_de_manipulacao_da_request.png" width="700" alt="Tela de Manipulação das Requests" />
 </p>
 
 <p align="center">
-  <img src="https://github.com/jnerydesigner/luiza-labs-logistics/blob/main/assets/test.png" width="700" alt="Relatório de Testes" />
+  <img src="https://github.com/jnerydesigner/luiza-labs-logistics/blob/main/assets/coluna_de_resposta_da_requisicao.png" width="700" alt="Tela de Resposta da Requisição" />
 </p>
 
