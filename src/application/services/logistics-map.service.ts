@@ -2,10 +2,7 @@ import { Injectable, Logger } from '@nestjs/common';
 import { Readable } from 'stream';
 import * as readline from 'readline';
 import * as fs from 'fs';
-import { promisify } from 'util';
-
-const writeFileAsync = promisify(fs.writeFile);
-
+import * as path from 'path';
 export interface ILogisticsMapResponse {
   user_id: number;
   name: string;
@@ -82,12 +79,12 @@ export class LogisticsMapService {
 
     if (linesErrors.length > 0) {
       this.logger.error(`Errors in lines: ${linesErrors.join(', ')}`);
-      await this.saveJsonToFile('errors.json', logisticsErrors);
+      await this.saveJsonToFile('errors.json', logisticsErrors, true);
     }
 
     const response = Array.from(userMap.values());
 
-    await this.saveJsonToFile(nameFileExport, response);
+    await this.saveJsonToFile(nameFileExport, response, false);
 
     return response;
   }
@@ -152,22 +149,23 @@ export class LogisticsMapService {
     order.total = Number((order.total + entry.value).toFixed(2));
   }
 
-  // Busca a primeira ocorrencia do numero 0, para encontrar o fina dos caracters de userName
   extractUntilFirstZero(str: string) {
     const zeroIndex = str.indexOf('0');
     return zeroIndex !== -1 ? str.slice(0, zeroIndex) : str;
   }
 
-  // Transforma a data
   formatDate(dateString: string) {
     return `${dateString.slice(0, 4)}-${dateString.slice(4, 6)}-${dateString.slice(6, 8)}`;
   }
 
-  async saveJsonToFile(filename: string, data: any) {
+  async saveJsonToFile(filename: string, data: any, error: boolean) {
     const jsonString = JSON.stringify(data, null, 2);
     const buffer = Buffer.from(jsonString, 'utf8');
 
     this.logger.log(`Arquivo ${filename} salvo com sucesso.`);
-    await writeFileAsync(`${filename}`, buffer.toString('utf8'), 'utf8');
+    const directory = error ? 'errors' : 'results';
+    const filePath = path.join(process.cwd(), 'logs', directory, filename);
+
+    await fs.promises.writeFile(filePath, buffer.toString('utf8'), 'utf8');
   }
 }

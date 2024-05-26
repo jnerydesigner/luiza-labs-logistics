@@ -2,7 +2,10 @@ import {
   ILogisticsMapResponse,
   LogisticsMapService,
 } from '@application/services/logistics-map.service';
-// import { Logger } from '@nestjs/common';
+import { Logger } from '@nestjs/common';
+import { Test, TestingModule } from '@nestjs/testing';
+import * as fs from 'fs';
+import * as path from 'path';
 
 function MockFile(): Express.Multer.File {
   const buffer = Buffer.from(
@@ -25,7 +28,6 @@ function MockFile(): Express.Multer.File {
 
 describe('LogisticsMapService', () => {
   let logisticsMapService: LogisticsMapService;
-  //   let logger: Logger;
 
   MockFile.prototype.create = function (name, size, mimeType) {
     name = name || 'mock.txt';
@@ -45,12 +47,75 @@ describe('LogisticsMapService', () => {
     return blob;
   };
 
-  beforeEach(() => {
-    logisticsMapService = new LogisticsMapService();
+  beforeEach(async () => {
+    const app: TestingModule = await Test.createTestingModule({
+      providers: [
+        LogisticsMapService,
+        {
+          provide: Logger,
+          useValue: {
+            log: jest.fn(),
+            error: jest.fn(),
+          },
+        },
+      ],
+    }).compile();
+    logisticsMapService = app.get<LogisticsMapService>(LogisticsMapService);
+  });
+
+  afterEach(() => {
+    jest.resetAllMocks();
   });
 
   it('should be defined', () => {
     expect(logisticsMapService).toBeDefined();
+  });
+
+  it('should save file to the errors directory if error is true', async () => {
+    const data = {
+      errors: [
+        {
+          line: 1,
+          message: 'Error Test True in line 1.',
+        },
+      ],
+    };
+    const filename = 'errors-test-true.json';
+    const error = true;
+
+    jest.spyOn(fs.promises, 'writeFile').mockResolvedValue();
+
+    await logisticsMapService.saveJsonToFile(filename, data, error);
+
+    const expectedPath = path.join(process.cwd(), 'logs', 'errors', filename);
+
+    expect(fs.promises.writeFile).toHaveBeenCalledWith(
+      expectedPath,
+      JSON.stringify(data, null, 2),
+      'utf8',
+    );
+
+    jest.clearAllMocks();
+  });
+
+  it('should save file to the results directory if error is false', async () => {
+    const data = { errors: [] };
+    const filename = 'errors-test-false.json';
+    const error = false;
+
+    jest.spyOn(fs.promises, 'writeFile').mockResolvedValue();
+
+    await logisticsMapService.saveJsonToFile(filename, data, error);
+
+    const expectedPath = path.join(process.cwd(), 'logs', 'results', filename);
+
+    expect(fs.promises.writeFile).toHaveBeenCalledWith(
+      expectedPath,
+      JSON.stringify(data, null, 2),
+      'utf8',
+    );
+
+    jest.clearAllMocks();
   });
 
   it('should return a logistics map', async () => {
@@ -123,6 +188,7 @@ describe('LogisticsMapService', () => {
     const result = await logisticsMapService.saveJsonToFile(
       'errors-test.json',
       logisticsError,
+      true,
     );
 
     expect(result).toBeUndefined();

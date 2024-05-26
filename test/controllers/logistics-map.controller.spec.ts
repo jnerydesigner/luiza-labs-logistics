@@ -25,6 +25,7 @@ function MockFile(): Express.Multer.File {
 describe('LogisticsMapController', () => {
   let logisticsMapController: LogisticsMapController;
   let logger: Logger;
+  let logisticsMapService: LogisticsMapService;
   MockFile.prototype.create = function (name, size, mimeType) {
     name = name || 'mock.txt';
     size = size || 1024;
@@ -59,6 +60,8 @@ describe('LogisticsMapController', () => {
 
     logger = app.get<Logger>(Logger);
 
+    logisticsMapService = app.get<LogisticsMapService>(LogisticsMapService);
+
     jest.spyOn(logger, 'error').mockImplementation(() => {});
   });
 
@@ -83,6 +86,10 @@ describe('LogisticsMapController', () => {
         ],
       },
     ];
+
+    jest
+      .spyOn(logisticsMapService, 'getLogisticsMap')
+      .mockReturnValueOnce(Promise.resolve(expectedResponse));
 
     const result = await logisticsMapController.uploadFile(mockFile);
 
