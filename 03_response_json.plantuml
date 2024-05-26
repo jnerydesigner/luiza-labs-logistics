@@ -1,0 +1,20 @@
+@startjson Resposta em Json
+{
+    "user_id": 1,
+    "name": "John Doe",
+    "orders": [
+    {
+        "order_id": 1,
+        "total": "100",
+        "date": "2024-05-27",
+        "products": [
+            {
+            "product_id": 1,
+            "value": "50"
+            }
+        ]
+    }
+    ]
+}
+@endjson
+

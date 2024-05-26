@@ -1,0 +1,65 @@
+@startuml Arquiterura de Classes
+
+title <b>Diagrama de Arquiterura de Classes</b>
+
+interface ILogisticsMapResponse {
+  + user_id: number
+  + name: string
+  + orders: IOrder[]
+}
+
+interface IOrder {
+  + order_id: number
+  + total: string
+  + date: string
+  + products: IProduct[]
+}
+
+interface IProduct {
+  + product_id: number
+  + value: string
+}
+
+interface ILogisticsMap {
+  + user_id: number
+  + name: string
+  + order_id: number
+  + date: string
+  + product_id: number
+  + value: string
+}
+
+interface ILogisticsMapError {
+  + line: number
+  + message: string
+}
+
+interface ILogisticsError {
+  + errors: ILogisticsMapError[]
+}
+
+class Logger {
+  + log(message: string): void
+  + error(message: string): void
+}
+
+class LogisticsMapService {
+  - logger: Logger
+
+  + getLogisticsMap(file: Express.Multer.File, nameFileExport: string): ILogisticsMapResponse[]
+  + processLine(line: string): ILogisticsMap
+  + updateUserMap(userMap: Map<number, ILogisticsMapResponse>, entry: ILogisticsMap): void
+  + extractUntilFirstZero(str: string): string
+  + formatDate(dateString: string): string
+  + saveJsonToFile(filename: string, data: any, error: boolean): void
+}
+
+ILogisticsMapResponse --> IOrder
+IOrder --> IProduct
+ILogisticsMap --> ILogisticsMapResponse
+ILogisticsMapService --> Logger
+ILogisticsMapService --> ILogisticsMapResponse
+ILogisticsMapService --> ILogisticsMapError
+ILogisticsMapService --> ILogisticsError
+
+@enduml

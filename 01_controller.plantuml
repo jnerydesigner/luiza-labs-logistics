@@ -1,0 +1,22 @@
+@startuml Diagrama de Sequência
+
+
+title <b>Diagrama de Sequência: Interação Logística</b>
+
+actor Client
+
+participant LogisticsMapController
+participant LogisticsMapService
+
+Client -> LogisticsMapController: uploadFile(file)
+note right: The file format most be .txt
+activate LogisticsMapController
+LogisticsMapController -> LogisticsMapService: getLogisticsMap(file, nameFileExport)
+activate LogisticsMapService
+LogisticsMapService --> LogisticsMapController: response
+deactivate LogisticsMapService
+LogisticsMapController --> Client: response
+deactivate LogisticsMapController
+
+
+@enduml
