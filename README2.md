@@ -49,6 +49,24 @@ ou
 npm test:cov
 ```
 
+
+## Running the app
+
+```bash
+
+# watch mode
+npm run start:dev
+
+# build
+npm run build
+
+# development
+npm run start
+
+# production mode
+npm run start:prod
+```
+
 ## Crie uma view para envio do arquivo:
 
 - Criação de uma arquitetura simples em MVC, para facilitar o envio do arquivo.
