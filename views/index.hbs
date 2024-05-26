@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+    rel="stylesheet">
+  <title>Luiza Labs Logistics</title>
+</head>
+
+<body>
+  <div class="container">
+    <div class="formUploadContainer">
+      <h1>Formulário para envio do arquivo</h1>
+      <form id="fileUploadForm" enctype="multipart/form-data">
+        <input type="file" name="file" id="fileInput">
+        <button type="button" onclick="uploadFile()">Enviar</button>
+      </form>
+      <div id="response"></div>
+    </div>
+  </div>
+
+  <script>
+    async function uploadFile() {
+      const fileInput = document.getElementById('fileInput');
+      const file = fileInput.files[0];
+
+      const formData = new FormData();
+      formData.append('file', file);
+
+      try {
+        const response = await fetch('http://localhost:3333/logistics-map/upload', {
+          method: 'POST',
+          body: formData
+        });
+
+        if (response.ok) {
+          const responseData = await response.json()
+          console.log(responseData.message)
+          document.getElementById('response').innerHTML = `<p>${responseData.message}</p>`;
+        } else {
+          document.getElementById('response').innerHTML = `<p>Ocorreu um erro ao enviar o arquivo.</p>`;
+          console.error('Erro:', response.statusText);
+        }
+      } catch (error) {
+        document.getElementById('response').innerHTML = `<p>Ocorreu um erro ao enviar o arquivo.</p>`;
+        console.error('Erro:', error);
+      }
+    }
+  </script>
+</body>
+
+</html>
