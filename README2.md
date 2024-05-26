@@ -161,3 +161,27 @@ Os teste conseguiram cobrir 100%, conforme imagem abaixo e arquivo coverage do p
 <p align="center">
   <img src="https://github.com/jnerydesigner/luiza-labs-logistics/blob/main/assets/test.png" width="700" alt="Relatório de Testes" />
 </p>
+
+
+## Envio via Insomnia
+
+### Supondo que não tenha o insomnia instalado, o link para instalação está abaixo:
+
+<a href="https://insomnia.rest/download" target="_blank" style="font-size:2rem">Insomnia</a>
+
+<p align="center">
+  <img src="https://github.com/jnerydesigner/luiza-labs-logistics/blob/main/assets/test.png" width="700" alt="Relatório de Testes" />
+</p>
+
+<p align="center">
+  <img src="https://github.com/jnerydesigner/luiza-labs-logistics/blob/main/assets/test.png" width="700" alt="Relatório de Testes" />
+</p>
+
+<p align="center">
+  <img src="https://github.com/jnerydesigner/luiza-labs-logistics/blob/main/assets/test.png" width="700" alt="Relatório de Testes" />
+</p>
+
+<p align="center">
+  <img src="https://github.com/jnerydesigner/luiza-labs-logistics/blob/main/assets/test.png" width="700" alt="Relatório de Testes" />
+</p>
+
