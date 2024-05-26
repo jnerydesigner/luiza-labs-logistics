@@ -252,13 +252,6 @@ Os teste conseguiram cobrir 100%, conforme imagem abaixo e arquivo coverage do p
   <img src="https://github.com/jnerydesigner/luiza-labs-logistics/blob/main/out/04_error_json/Resposta%20em%20Json.png" width="700" alt="Diagrama de Json do Erro" />
 </p>
 
-### Diagrama de Sequência
-
-<p align="center">
-  <img src="https://github.com/jnerydesigner/luiza-labs-logistics/blob/main/out/01_controller/Diagrama%20de%20Sequ%C3%AAncia.png" width="700" alt="Diagrama de Sequencia" />
-</p>
-
-
 
 
 ## Developer
