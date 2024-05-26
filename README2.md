@@ -158,4 +158,6 @@ Pontos a serem abordados após a primeira implementação:
 
 Os teste conseguiram cobrir 100%, conforme imagem abaixo e arquivo coverage do projeto:
 
-![Untitled](Desafio%20Luiza%20Labs%20fedfe2964fc346348aa73f097c8aeb4d/Untitled%201.png)
+<p align="center">
+  <img src="https://github.com/jnerydesigner/luiza-labs-logistics/blob/main/assets/test.png" width="200" alt="Relatório de Testes" />
+</p>
