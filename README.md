@@ -85,7 +85,7 @@ A escolha do NodeJS com o NestJS, se deu por ele ter uma implementação mais ra
 
 1 - Primeira parte da solução é o envio do arquivo, pois o cliente necessita que o arquivo no formato acima, seja transformado em um json dessa forma:
 
-```yaml
+```json
 
 {
 	"user_id": 1,
