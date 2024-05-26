@@ -1,6 +1,8 @@
 # Desafio Luiza Labs
 
-![Untitled](Desafio%20Luiza%20Labs%20fedfe2964fc346348aa73f097c8aeb4d/Untitled.png)
+<p align="center">
+  <img src="https://github.com/jnerydesigner/luzia-labs-logistics/blob/main/assets/luizalabs.png" width="200" alt="Luiza Labs Logo" />
+</p>
 
 # Desafio Luiza labs
 
@@ -135,18 +137,18 @@ saveJsonToFile(filename: string, data: any, error: boolean)
 
 Como criou-se a solução:
 
-- [ ]  Pega-se a ocorrencia de userId : const userId = *line*.slice(0, 10).trim();
-- [ ]  Pega o restante: let rest = *line*.slice(10).trim();
-- [ ]  Pega a data: const date = rest.slice(-8).trim();
-- [ ]  Pega o restante: rest = *line*.slice(10).trim();
-- [ ]  const userName = *this*.extractUntilFirstZero(rest);
-- [ ]  Pega o restante: rest = *line*.slice(10).trim();
-- [ ]  Pega a orderId: const orderId = rest.slice(0, 10).trim();
-- [ ]  Pega o restante: rest = *line*.slice(10).trim();
-- [ ]  Pega o productId: const productId = rest.slice(0, 10).trim();
-- [ ]  E o que restar é o value: parseFloat(rest.slice(10).trim());
+- [x]  Pega-se a ocorrencia de userId : const userId = *line*.slice(0, 10).trim();
+- [x]  Pega o restante: let rest = *line*.slice(10).trim();
+- [x]  Pega a data: const date = rest.slice(-8).trim();
+- [x]  Pega o restante: rest = *line*.slice(10).trim();
+- [x]  const userName = *this*.extractUntilFirstZero(rest);
+- [x]  Pega o restante: rest = *line*.slice(10).trim();
+- [x]  Pega a orderId: const orderId = rest.slice(0, 10).trim();
+- [x]  Pega o restante: rest = *line*.slice(10).trim();
+- [x]  Pega o productId: const productId = rest.slice(0, 10).trim();
+- [x]  E o que restar é o value: parseFloat(rest.slice(10).trim());
 
-Algumas resalvas, conforme a quantidade dados for aumentando, coloquei uma solução com redis para uso de uma ferramenta do NesJS chamada Bull para uso de fila para criar um arquivo json, já com o formato desejado, apesar de trabalhar com streams, nada mais justo que se precaver.
+Algumas resalvas, conforme a quantidade dados for aumentando, é recomendado uma solução de fila, exemplo é o redis com uso de uma ferramenta do NesJS chamada Bull para uso de fila para criar um arquivo json, já com o formato desejado, apesar de trabalhar com streams, nada mais justo que se precaver.
 
 Pontos a serem abordados após a primeira implementação:
 
